@@ -5,7 +5,6 @@ const sendMail = require("../utils/sendEmail");
 const crypto = require("crypto");
 const cloudinary = require("cloudinary");
 const bcrypt = require("bcryptjs");
-const _ = require("lodash")
 
 // register user
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
@@ -118,22 +117,7 @@ exports.deleteUserAccount = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler("Please login to access the resource", 404));
   }
   const imageId = user.avatar.public_id;
-//   await cloudinary.v2.uploader.destroy(imageId);
-
-  const all_users = await User.find();
-  for (let other_user of all_users) {
-    const index = other_user.subscribers.indexOf(user._id);
-    if (index > -1) {
-      other_user.subscribers.splice(index, 1);
-      await other_user.save();
-    }
-
-    const index2 = other_user.notifications.indexOf(user._id);
-    if (index2 > -1) {
-      other_user.notifications.splice(index2, 1);
-      await other_user.save();
-    }
-  }
+  //  await cloudinary.v2.uploader.destroy(imageId);
   await user.remove();
   res
     .status(200)
@@ -197,26 +181,151 @@ exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
 
 // add video to watchlater
 exports.addWatchLater = catchAsyncErrors(async (req, res, next) => {
-    const {videoId} = req.body
-    req.user.watchLater.push(videoId)
-    await req.user.save()
-    res.status(201).json({success: true, watchLaterList: req.user.watchLater, message: "Video added to watch later"})
-})
+  const { videoId } = req.body;
+  req.user.watchLater.push(videoId);
+  await req.user.save();
+  res
+    .status(201)
+    .json({
+      success: true,
+      watchLaterList: req.user.watchLater,
+      message: "Video added to watch later",
+    });
+});
 
 // fetch watchlater
 exports.getWatchLater = catchAsyncErrors(async (req, res, next) => {
-    res.status(200).json({success: true, watchLaterList: req.user.watchLater})
-})
+  res.status(200).json({ success: true, watchLaterList: req.user.watchLater });
+});
 
 // remove video from watchlater
 exports.removeWatchLater = catchAsyncErrors(async (req, res, next) => {
-    const { videoId } = req.body
-    const index = req.user.watchLater.indexOf(videoId)
-    if (index > -1) {
-        req.user.watchLater.splice(index, 1)
-    }
-    await req.user.save()
-    res.status(200).json({success: true, watchLaterList: req.user.watchLater, message: "Video removed from watch later"})
-})
+  const { videoId } = req.body;
+  const index = req.user.watchLater.indexOf(videoId);
+  if (index > -1) {
+    req.user.watchLater.splice(index, 1);
+  }
+  await req.user.save();
+  res
+    .status(200)
+    .json({
+      success: true,
+      watchLaterList: req.user.watchLater,
+      message: "Video removed from watch later",
+    });
+});
 
-// 
+// add history
+exports.addHistory = catchAsyncErrors(async (req, res, next) => {
+  const { videoId } = req.body;
+  req.user.history.unshift(videoId);
+  if (req.user.history.length > 10) {
+    req.user.history.splice(10, req.user.history.length - 10);
+  }
+  await req.user.save();
+  res.status(201).json({ success: true, historyList: req.user.history });
+});
+
+// fetch history
+exports.getHistory = catchAsyncErrors(async (req, res, next) => {
+  res.status(200).json({ success: true, historyList: req.user.history });
+});
+
+// remove video from history
+exports.removeHistory = catchAsyncErrors(async (req, res, next) => {
+  const { videoId } = req.body;
+  const index = req.user.history.indexOf(videoId);
+  if (index > -1) {
+    req.user.history.splice(index, 1);
+  }
+  await req.user.save();
+  res.status(200).json({ success: true, historyList: req.user.history });
+});
+
+// create playlist
+exports.createPlaylist = catchAsyncErrors(async (req, res, next) => {
+  const index = req.user.playlists.findIndex(
+    (playlist) => playlist.name === req.body.name
+  );
+  if (index > -1) {
+    return next(new ErrorHandler("Playlist already exists", 400));
+  }
+  const new_playlist = {
+    name: req.body.name,
+    videos: [],
+  };
+  req.user.playlists.push(new_playlist);
+  await req.user.save();
+  res
+    .status(201)
+    .json({
+      success: true,
+      playlists: req.user.playlists,
+      message: "New playlist created",
+    });
+});
+
+// remove playlist
+exports.removePlaylist = catchAsyncErrors(async (req, res, next) => {
+  const playlist_name = req.body.name;
+  const index = req.user.playlists.findIndex(
+    (playlist) => playlist.name === playlist_name
+  );
+  if (index > -1) {
+    req.user.playlists.splice(index, 1);
+  }
+  await req.user.save();
+  res
+    .status(200)
+    .json({
+      success: true,
+      playlists: req.user.playlists,
+      message: "Playlist removed",
+    });
+});
+
+// fetch all playlists
+exports.getPlaylists = catchAsyncErrors(async (req, res, next) => {
+  res.status(200).json({ success: true, playlists: req.user.playlists });
+});
+
+// add video to a playlist
+exports.addVideoPlaylist = catchAsyncErrors(async (req, res, next) => {
+  const { videoId, playlistName } = req.body;
+  const index = req.user.playlists.findIndex(
+    (playlist) => playlist.name === playlistName
+  );
+  if (index > -1) {
+    req.user.playlists[index].videos.push(videoId);
+  }
+  await req.user.save();
+  res
+    .status(201)
+    .json({
+      success: true,
+      playlists: req.user.playlists,
+      message: `Video added to playlist ${playlistName}`,
+    });
+});
+
+// remove video from a playlist
+exports.removeVideoPlaylist = catchAsyncErrors(async (req, res, next) => {
+  const { videoId, playlistName } = req.body;
+  const index = req.user.playlists.findIndex(
+    (playlist) => playlist.name === playlistName
+  );
+  if (index > -1) {
+    const video_index = req.user.playlists[index].videos.indexOf(videoId);
+    if (video_index > -1) {
+      req.user.playlists[index].videos.splice(video_index, 1);
+    }
+  }
+  await req.user.save();
+  res
+    .status(200)
+    .json({
+      success: true,
+      playlists: req.user.playlists,
+      message: `Video removed from playlist ${playlistName}`,
+    });
+});
