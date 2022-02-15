@@ -14,6 +14,7 @@ const userSchema = new mongoose.Schema({
     maxlength: [30, "Name must be less than 30 characters"],
     minlength: [3, "Name must be at least 3 characters"],
     trim: true,
+    unique: true,
   },
   email: {
     type: String,
@@ -101,7 +102,7 @@ userSchema.pre("remove", async function (next) {
   const videos = await Video.find({ owner: user._id });
   for (let video of videos) {
     const public_id = video.video.public_id;
-    await cloudinary.v2.uploader.destroy(public_id);
+    // await cloudinary.v2.uploader.destroy(public_id);
   }
   await Video.deleteMany({ owner: user._id });
 
@@ -119,20 +120,6 @@ userSchema.pre("remove", async function (next) {
     }
   }
 
-  //   const all_users = await User.find();
-  //   for (let other_user of all_users) {
-  //     const index = other_user.subscribers.indexOf(user._id);
-  //     if (index > -1) {
-  //       other_user.subscribers.splice(index, 1);
-  //       await other_user.save();
-  //     }
-
-  //     const index2 = other_user.notifications.indexOf(user._id);
-  //     if (index2 > -1) {
-  //       other_user.notifications.splice(index2, 1);
-  //       await other_user.save();
-  //     }
-  //   }
   next();
 });
 
