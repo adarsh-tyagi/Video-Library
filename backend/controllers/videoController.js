@@ -33,9 +33,9 @@ exports.fetchVideosList = catchAsyncErrors(async (req, res, next) => {
 // create new video
 exports.createVideo = catchAsyncErrors(async (req, res, next) => {
   const { title, description, video } = req.body;
-  const myCloud = await cloudinary.v2.uploader.upload(video, {
-    folder: "videoLibrary-videos",
-  });
+  // const myCloud = await cloudinary.v2.uploader.upload(video, {
+  //   folder: "videoLibrary-videos",
+  // });
   const newVideo = await Video.create({
     title,
     description,
