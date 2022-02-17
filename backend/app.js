@@ -3,6 +3,8 @@ const bodyparser = require("body-parser");
 const cors = require("cors");
 const filUpload = require("express-fileupload");
 const errorMiddleware = require("./middlewares/error");
+const userRouter = require("./routes/userRoutes");
+const videoRouter = require("./routes/videoRoutes");
 
 // config in development mode
 if (process.env.NODE_ENV !== "PRODUCTION") {
@@ -17,9 +19,8 @@ app.use(filUpload());
 app.use(cors());
 
 // routes
-app.get("/", (req, res) => {
-  res.send("This is video-library backend");
-});
+app.use("/api/v1/user", userRouter);
+app.use("/api/v1/video", videoRouter);
 
 // error handling
 app.use(errorMiddleware);
