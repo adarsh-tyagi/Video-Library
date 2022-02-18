@@ -8,6 +8,8 @@ const bcrypt = require("bcryptjs");
 
 // register user
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
+  console.log("Register user function");
+  console.log("---------------------------------------------------------");
   const { name, email, password, avatar } = req.body;
   if (!name || !email || !password || !avatar) {
     return next(new ErrorHandler("Please enter all fields", 400));
@@ -49,6 +51,8 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
 
 // login user
 exports.loginUser = catchAsyncErrors(async (req, res, next) => {
+  console.log("Login user function");
+  console.log("---------------------------------------------------------");
   const { email, password } = req.body;
   if (!email || !password) {
     return next(new ErrorHandler("Please enter all fields", 400));
@@ -69,6 +73,8 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
 
 // get User details
 exports.getUserDetails = catchAsyncErrors(async (req, res, next) => {
+  console.log("Get user details function");
+  console.log("---------------------------------------------------------");
   const user = await User.findById(req.user._id);
   if (!user) {
     return next(new ErrorHandler("Please login to access the resource", 404));
@@ -78,11 +84,15 @@ exports.getUserDetails = catchAsyncErrors(async (req, res, next) => {
 
 // logout user
 exports.logoutUser = catchAsyncErrors(async (req, res, next) => {
+  console.log("Logout user function");
+  console.log("---------------------------------------------------------");
   res.status(200).json({ success: true, message: "Logout successful" });
 });
 
 // update user details
 exports.updateUserDetails = catchAsyncErrors(async (req, res, next) => {
+  console.log("Update user function");
+  console.log("---------------------------------------------------------");
   const newUserData = {
     name: req.body.name,
   };
@@ -112,6 +122,8 @@ exports.updateUserDetails = catchAsyncErrors(async (req, res, next) => {
 
 // delete user account
 exports.deleteUserAccount = catchAsyncErrors(async (req, res, next) => {
+  console.log("Delete user function");
+  console.log("---------------------------------------------------------");
   const user = await User.findById(req.user._id);
   if (!user) {
     return next(new ErrorHandler("Please login to access the resource", 404));
@@ -126,11 +138,14 @@ exports.deleteUserAccount = catchAsyncErrors(async (req, res, next) => {
 
 // forgot user password
 exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
-  const user = await User.find({ email: req.body.email });
+  console.log("Forgot password function");
+  console.log("---------------------------------------------------------");
+  const user = await User.findOne({ email: req.body.email });
+
   if (!user) {
     return next(new ErrorHandler("User not found for the email", 404));
   }
-  const resetToken = await User.getResetPasswordToken();
+  const resetToken = await user.getResetPasswordToken();
   await user.save({ validateBeforeSave: false });
 
   // const resetPasswordUrl = `${req.protocol}://${req.get('host')}/password/reset/${resetToken}`
@@ -156,6 +171,8 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
 
 // reset Password
 exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
+  console.log("Reset password function");
+  console.log("---------------------------------------------------------");
   const resetPasswordToken = crypto
     .createHash("sha256")
     .update(req.params.token)
@@ -181,46 +198,54 @@ exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
 
 // add video to watchlater
 exports.addWatchLater = catchAsyncErrors(async (req, res, next) => {
+  console.log("Add watchlater function");
+  console.log("---------------------------------------------------------");
   const { videoId } = req.body;
-  req.user.watchLater.push(videoId);
+  if (!req.user.watchLater.includes(videoId)) {
+    req.user.watchLater.push(videoId);
+  }
   await req.user.save();
-  res
-    .status(201)
-    .json({
-      success: true,
-      watchLaterList: req.user.watchLater,
-      message: "Video added to watch later",
-    });
+  res.status(201).json({
+    success: true,
+    watchLaterList: req.user.watchLater,
+    message: "Video added to watch later",
+  });
 });
 
 // fetch watchlater
 exports.getWatchLater = catchAsyncErrors(async (req, res, next) => {
+  console.log("Get watchlater function");
+  console.log("---------------------------------------------------------");
   res.status(200).json({ success: true, watchLaterList: req.user.watchLater });
 });
 
 // remove video from watchlater
 exports.removeWatchLater = catchAsyncErrors(async (req, res, next) => {
+  console.log("Remove watchlater function");
+  console.log("---------------------------------------------------------");
   const { videoId } = req.body;
   const index = req.user.watchLater.indexOf(videoId);
   if (index > -1) {
     req.user.watchLater.splice(index, 1);
   }
   await req.user.save();
-  res
-    .status(200)
-    .json({
-      success: true,
-      watchLaterList: req.user.watchLater,
-      message: "Video removed from watch later",
-    });
+  res.status(200).json({
+    success: true,
+    watchLaterList: req.user.watchLater,
+    message: "Video removed from watch later",
+  });
 });
 
 // add history
 exports.addHistory = catchAsyncErrors(async (req, res, next) => {
+  console.log("Add history function");
+  console.log("---------------------------------------------------------");
   const { videoId } = req.body;
-  req.user.history.unshift(videoId);
-  if (req.user.history.length > 10) {
-    req.user.history.splice(10, req.user.history.length - 10);
+  if (!req.user.history.includes(videoId)) {
+    req.user.history.unshift(videoId);
+    if (req.user.history.length > 10) {
+      req.user.history.splice(10, req.user.history.length - 10);
+    }
   }
   await req.user.save();
   res.status(201).json({ success: true, historyList: req.user.history });
@@ -228,11 +253,15 @@ exports.addHistory = catchAsyncErrors(async (req, res, next) => {
 
 // fetch history
 exports.getHistory = catchAsyncErrors(async (req, res, next) => {
+  console.log("Get history function");
+  console.log("---------------------------------------------------------");
   res.status(200).json({ success: true, historyList: req.user.history });
 });
 
 // remove video from history
 exports.removeHistory = catchAsyncErrors(async (req, res, next) => {
+  console.log("Remve history function");
+  console.log("---------------------------------------------------------");
   const { videoId } = req.body;
   const index = req.user.history.indexOf(videoId);
   if (index > -1) {
@@ -244,6 +273,8 @@ exports.removeHistory = catchAsyncErrors(async (req, res, next) => {
 
 // create playlist
 exports.createPlaylist = catchAsyncErrors(async (req, res, next) => {
+  console.log("Create playlist function");
+  console.log("---------------------------------------------------------");
   const index = req.user.playlists.findIndex(
     (playlist) => playlist.name === req.body.name
   );
@@ -256,17 +287,17 @@ exports.createPlaylist = catchAsyncErrors(async (req, res, next) => {
   };
   req.user.playlists.push(new_playlist);
   await req.user.save();
-  res
-    .status(201)
-    .json({
-      success: true,
-      playlists: req.user.playlists,
-      message: "New playlist created",
-    });
+  res.status(201).json({
+    success: true,
+    playlists: req.user.playlists,
+    message: "New playlist created",
+  });
 });
 
 // remove playlist
 exports.removePlaylist = catchAsyncErrors(async (req, res, next) => {
+  console.log("Remove playlist function");
+  console.log("---------------------------------------------------------");
   const playlist_name = req.body.name;
   const index = req.user.playlists.findIndex(
     (playlist) => playlist.name === playlist_name
@@ -275,41 +306,49 @@ exports.removePlaylist = catchAsyncErrors(async (req, res, next) => {
     req.user.playlists.splice(index, 1);
   }
   await req.user.save();
-  res
-    .status(200)
-    .json({
-      success: true,
-      playlists: req.user.playlists,
-      message: "Playlist removed",
-    });
+  res.status(200).json({
+    success: true,
+    playlists: req.user.playlists,
+    message: "Playlist removed",
+  });
 });
 
 // fetch all playlists
 exports.getPlaylists = catchAsyncErrors(async (req, res, next) => {
+  console.log("Get playlists function");
+  console.log("---------------------------------------------------------");
+  console.log(req.user);
   res.status(200).json({ success: true, playlists: req.user.playlists });
 });
 
 // add video to a playlist
 exports.addVideoPlaylist = catchAsyncErrors(async (req, res, next) => {
+  console.log("Add Video playlists function");
+  console.log("---------------------------------------------------------");
   const { videoId, playlistName } = req.body;
+
   const index = req.user.playlists.findIndex(
     (playlist) => playlist.name === playlistName
   );
   if (index > -1) {
-    req.user.playlists[index].videos.push(videoId);
+    if (!req.user.playlists[index].videos.includes(videoId)) {
+      req.user.playlists[index].videos.push(videoId);
+    }
   }
   await req.user.save();
-  res
-    .status(201)
-    .json({
-      success: true,
-      playlists: req.user.playlists,
-      message: `Video added to playlist ${playlistName}`,
-    });
+  console.log(req.user.playlists[1].videos);
+  console.log(req.user.playlists);
+  res.status(201).json({
+    success: true,
+    playlists: req.user.playlists,
+    message: `Video added to playlist ${playlistName}`,
+  });
 });
 
 // remove video from a playlist
 exports.removeVideoPlaylist = catchAsyncErrors(async (req, res, next) => {
+  console.log("Remove video playlists function");
+  console.log("---------------------------------------------------------");
   const { videoId, playlistName } = req.body;
   const index = req.user.playlists.findIndex(
     (playlist) => playlist.name === playlistName
@@ -321,11 +360,9 @@ exports.removeVideoPlaylist = catchAsyncErrors(async (req, res, next) => {
     }
   }
   await req.user.save();
-  res
-    .status(200)
-    .json({
-      success: true,
-      playlists: req.user.playlists,
-      message: `Video removed from playlist ${playlistName}`,
-    });
+  res.status(200).json({
+    success: true,
+    playlists: req.user.playlists,
+    message: `Video removed from playlist ${playlistName}`,
+  });
 });

@@ -48,8 +48,12 @@ const userSchema = new mongoose.Schema({
     default: [],
   },
   playlists: {
-    type: Array,
-    default: [],
+    type: [
+      {
+        name: String,
+        videos: [],
+      },
+    ],
   },
   created_at: {
     type: Date,
@@ -70,6 +74,7 @@ userSchema.methods.getJWTToken = function () {
 userSchema.methods.getResetPasswordToken = async function () {
   const user = this;
   const resetToken = crypto.randomBytes(20).toString("hex");
+  // setting reset token and expiration time i.e. 15 minutes
   user.resetPasswordToken = crypto
     .createHash("sha256")
     .update(resetToken)
@@ -82,7 +87,7 @@ userSchema.methods.getResetPasswordToken = async function () {
 // hashing password
 userSchema.pre("save", async function (next) {
   const user = this;
-  if (!user.isModified(password)) {
+  if (!user.isModified("password")) {
     next();
   }
   user.password = await bcrypt.hash(user.password, 10);
