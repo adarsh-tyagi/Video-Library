@@ -238,33 +238,43 @@ export const watchHistoryReducer = (
 };
 
 // handles playlists
-export const playlistReducer = (state = {playlists = []}, action) => {
-    switch (action.type) {
-        case PLAYLIST_REQUEST:
-        case PLAYLIST_ADD_REQUEST:
-        case PLAYLIST_REMOVE_REQUEST:
-        case PLAYLIST_VIDEO_ADD_REQUEST:
-        case PLAYLIST_VIDEO_REMOVE_REQUEST:
-            return {...state, loading: true}
-        case PLAYLIST_SUCCESS:
-            return { ...state, loading: false, playlists: action.payload.playlists }
-        case PLAYLIST_ADD_SUCCESS:
-        case PLAYLIST_REMOVE_SUCCESS:
-            return { ...state, loading: false, playlists: action.payload.playlists, message: action.payload.message }
-        case PLAYLIST_VIDEO_ADD_SUCCESS:
-        case PLAYLIST_VIDEO_REMOVE_SUCCESS:
-            return {...state, loading: false, playlists: action.payload.playlists, message: action.payload.message}
-        case PLAYLIST_FAIL:
-        case PLAYLIST_ADD_FAIL:
-        case PLAYLIST_REMOVE_FAIL:
-        case PLAYLIST_VIDEO_ADD_FAIL:
-        case PLAYLIST_VIDEO_REMOVE_FAIL:
-            return {...state, loading: false, error: action.payload.message}
-        case CLEAR_ERROR:
-            return { ...state, error: null }
-        case CLEAR_MESSAGE:
-            return { ...state, message: null }
-        default:
-            return state
-    }
-}
+export const playlistReducer = (state = { playlists: [] }, action) => {
+  switch (action.type) {
+    case PLAYLIST_REQUEST:
+    case PLAYLIST_ADD_REQUEST:
+    case PLAYLIST_REMOVE_REQUEST:
+    case PLAYLIST_VIDEO_ADD_REQUEST:
+    case PLAYLIST_VIDEO_REMOVE_REQUEST:
+      return { ...state, loading: true };
+    case PLAYLIST_SUCCESS:
+      return { ...state, loading: false, playlists: action.payload.playlists };
+    case PLAYLIST_ADD_SUCCESS:
+    case PLAYLIST_REMOVE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        playlists: action.payload.playlists,
+        message: action.payload.message,
+      };
+    case PLAYLIST_VIDEO_ADD_SUCCESS:
+    case PLAYLIST_VIDEO_REMOVE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        playlists: action.payload.playlists,
+        message: action.payload.message,
+      };
+    case PLAYLIST_FAIL:
+    case PLAYLIST_ADD_FAIL:
+    case PLAYLIST_REMOVE_FAIL:
+    case PLAYLIST_VIDEO_ADD_FAIL:
+    case PLAYLIST_VIDEO_REMOVE_FAIL:
+      return { ...state, loading: false, error: action.payload.message };
+    case CLEAR_ERROR:
+      return { ...state, error: null };
+    case CLEAR_MESSAGE:
+      return { ...state, message: null };
+    default:
+      return state;
+  }
+};
