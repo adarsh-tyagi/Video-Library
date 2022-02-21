@@ -12,21 +12,21 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
   if (!name || !email || !password || !avatar) {
     return next(new ErrorHandler("Please enter all fields", 400));
   }
-  //   const myCloud = await cloudinary.v2.uploader.upload(avatar, {
-  //     folder: "videoLibrary-avatars",
-  //   });
+  const myCloud = await cloudinary.v2.uploader.upload(avatar, {
+    folder: "videoLibrary-avatars",
+  });
   const user = await User.create({
     name,
     email,
     password,
-    avatar: {
-      public_id: "public_id",
-      url: "url",
-    },
     // avatar: {
-    //   public_id: myCloud.public_id,
-    //   url: myCloud.secure_url,
+    //   public_id: "public_id",
+    //   url: "url",
     // },
+    avatar: {
+      public_id: myCloud.public_id,
+      url: myCloud.secure_url,
+    },
   });
   try {
     const message = `Welcome ${name},\nYou are successfully registered.\n\nThanks,\nVideo Library Team`;
@@ -117,7 +117,7 @@ exports.deleteUserAccount = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler("Please login to access the resource", 404));
   }
   const imageId = user.avatar.public_id;
-  //  await cloudinary.v2.uploader.destroy(imageId);
+  await cloudinary.v2.uploader.destroy(imageId);
   await user.remove();
   res
     .status(200)

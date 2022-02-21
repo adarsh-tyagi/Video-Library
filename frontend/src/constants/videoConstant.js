@@ -1,0 +1,50 @@
+// get home videos
+export const HOME_VIDEOS_REQUEST = "HOME_VIDEOS_REQUEST";
+export const HOME_VIDEOS_SUCCESS = "HOME_VIDEOS_SUCCESS";
+export const HOME_VIDEOS_FAIL = "HOME_VIDEOS_FAIL";
+
+// search videos
+export const SEARCH_VIDEOS_REQUEST = "SEARCH_VIDEOS_REQUEST";
+export const SEARCH_VIDEOS_SUCCESS = "SEARCH_VIDEOS_SUCCESS";
+export const SEARCH_VIDEOS_FAIL = "SEARCH_VIDEOS_FAIL";
+
+// get videos from list
+export const VIDEO_LIST_REQUEST = "VIDEO_LIST_REQUEST";
+export const VIDEO_LIST_SUCCESS = "VIDEO_LIST_SUCCESS";
+export const VIDEO_LIST_FAIL = "VIDEO_LIST_FAIL";
+
+// upload new video
+export const CREATE_VIDEO_REQUEST = "CREATE_VIDEO_REQUEST";
+export const CREATE_VIDEO_SUCCESS = "CREATE_VIDEO_SUCCESS";
+export const CREATE_VIDEO_FAIL = "CREATE_VIDEO_FAIL";
+
+// get video details
+export const VIDEO_DEATILS_REQUEST = "VIDEO_DEATILS_REQUEST";
+export const VIDEO_DEATILS_SUCCESS = "VIDEO_DEATILS_SUCCESS";
+export const VIDEO_DEATILS_FAIL = "VIDEO_DEATILS_FAIL";
+
+// delete a video
+export const DELETE_VIDEO_REQUEST = "DELETE_VIDEO_REQUEST";
+export const DELETE_VIDEO_SUCCESS = "DELETE_VIDEO_SUCCESS";
+export const DELETE_VIDEO_FAIL = "DELETE_VIDEO_FAIL";
+
+// get user's videos
+export const USER_VIDEOS_REQUEST = "USER_VIDEOS_REQUEST";
+export const USER_VIDEOS_SUCCESS = "USER_VIDEOS_SUCCESS";
+export const USER_VIDEOS_FAIL = "USER_VIDEOS_FAIL";
+
+// toggle like button
+export const TOGGLE_LIKE_REQUEST = "TOGGLE_LIKE_REQUEST";
+export const TOGGLE_LIKE_SUCCESS = "TOGGLE_LIKE_SUCCESS";
+export const TOGGLE_LIKE_FAIL = "TOGGLE_LIKE_FAIL";
+
+// toggle dislike button
+export const TOGGLE_DISLIKE_REQUEST = "TOGGLE_DISLIKE_REQUEST";
+export const TOGGLE_DISLIKE_SUCCESS = "TOGGLE_DISLIKE_SUCCESS";
+export const TOGGLE_DISLIKE_FAIL = "TOGGLE_DISLIKE_FAIL";
+
+// clear errors
+export const CLEAR_ERROR = "CLEAR_ERROR";
+
+// clear messages
+export const CLEAR_MESSAGE = "CLEAR_MESSAGE";

@@ -99,7 +99,7 @@ userSchema.pre("remove", async function (next) {
   const videos = await Video.find({ owner: user._id });
   for (let video of videos) {
     const public_id = video.video.public_id;
-    // await cloudinary.v2.uploader.destroy(public_id);
+    await cloudinary.v2.uploader.destroy(public_id);
   }
   await Video.deleteMany({ owner: user._id });
 

@@ -8,6 +8,11 @@ import {
   watchHistoryReducer,
   playlistReducer,
 } from "./reducers/userReducer";
+import {
+  videoCreationReducer,
+  videoDetailReducer,
+  videosReducer,
+} from "./reducers/videoReducer";
 
 const reducer = combineReducers({
   user: userReducer,
@@ -15,6 +20,9 @@ const reducer = combineReducers({
   password: passwordReducer,
   watchHistory: watchHistoryReducer,
   playlist: playlistReducer,
+  videos: videosReducer,
+  videoCreation: videoCreationReducer,
+  videoDetail: videoDetailReducer,
 });
 
 const initialState = {};

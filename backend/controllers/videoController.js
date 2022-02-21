@@ -39,18 +39,18 @@ exports.fetchVideosList = catchAsyncErrors(async (req, res, next) => {
 // create new video
 exports.createVideo = catchAsyncErrors(async (req, res, next) => {
   const { title, description, video } = req.body;
-  // const myCloud = await cloudinary.v2.uploader.upload(video, {
-  //   folder: "videoLibrary-videos",
-  // });
+  const myCloud = await cloudinary.v2.uploader.upload(video, {
+    folder: "videoLibrary-videos",
+  });
   const newVideo = await Video.create({
     title,
     description,
     owner: req.user._id,
-    video: {
-      public_id: "samples/elephants",
-      url: "https://res.cloudinary.com/dpsyvbeem/video/upload/v1634397373/samples/elephants.mp4",
-    },
-    // video: { public_id: myCloud.public_id, url: myCloud.secure_url },
+    // video: {
+    //   public_id: "samples/elephants",
+    //   url: "https://res.cloudinary.com/dpsyvbeem/video/upload/v1634397373/samples/elephants.mp4",
+    // },
+    video: { public_id: myCloud.public_id, url: myCloud.secure_url },
   });
   res
     .status(201)
@@ -79,7 +79,7 @@ exports.fetchUserVideo = catchAsyncErrors(async (req, res, next) => {
 
 // like a video
 exports.toggleLikeVideo = catchAsyncErrors(async (req, res, next) => {
-  const video = await Video.findById(req.body.videoId);
+  const video = await Video.findById(req.body.videoId).populate("owner");
   if (video.dislikes.includes(String(req.user._id))) {
     return next(new ErrorHandler("You already disliked the video", 400));
   }
@@ -96,7 +96,7 @@ exports.toggleLikeVideo = catchAsyncErrors(async (req, res, next) => {
 
 // dislike a video
 exports.toggleDislikeVideo = catchAsyncErrors(async (req, res, next) => {
-  const video = await Video.findById(req.body.videoId);
+  const video = await Video.findById(req.body.videoId).populate("owner");
   if (video.likes.includes(String(req.user._id))) {
     return next(new ErrorHandler("You already liked the video", 400));
   }
