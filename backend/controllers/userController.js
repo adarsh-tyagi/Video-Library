@@ -5,6 +5,7 @@ const sendMail = require("../utils/sendEmail");
 const crypto = require("crypto");
 const cloudinary = require("cloudinary");
 const bcrypt = require("bcryptjs");
+const Video = require("../models/videoModel")
 
 // register user
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
@@ -327,3 +328,15 @@ exports.removeVideoPlaylist = catchAsyncErrors(async (req, res, next) => {
     message: `Video removed from playlist ${playlistName}`,
   });
 });
+
+// get liked videos
+exports.getLikedVideos = catchAsyncErrors(async (req, res, next) => {
+  const all_videos = await Video.find({}).populate("owner")
+  var likedVideos = []
+  for (let video of all_videos) {
+    if (video.likes.includes(String(req.user._id))) {
+      likedVideos.push(video)
+    }
+  }
+  res.status(200).json({success: true, likedVideos})
+})

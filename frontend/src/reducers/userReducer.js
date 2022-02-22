@@ -60,6 +60,9 @@ import {
   CLEAR_MESSAGE,
   DELETE_USER_RESET,
   UPDATE_USER_RESET,
+  LIKED_VIDEOS_REQUEST,
+  LIKED_VIDEOS_FAIL,
+  LIKED_VIDEOS_SUCCESS,
 } from "../constants/userConstant";
 
 // handles register, login, logout and user details
@@ -184,7 +187,7 @@ export const passwordReducer = (state = {}, action) => {
 
 // handles watchlater and history
 export const watchHistoryReducer = (
-  state = { watchlater: [], history: [] },
+  state = { watchlater: [], history: [], likedVideos: [] },
   action
 ) => {
   switch (action.type) {
@@ -194,6 +197,7 @@ export const watchHistoryReducer = (
     case HISTORY_ADD_REQUEST:
     case WATCHLATER_REMOVE_REQUEST:
     case HISTORY_REMOVE_REQUEST:
+    case LIKED_VIDEOS_REQUEST:
       return { ...state, loading: true };
     case WATCHLATER_SUCCESS:
       return {
@@ -221,12 +225,19 @@ export const watchHistoryReducer = (
       };
     case HISTORY_REMOVE_SUCCESS:
       return { ...state, loading: false, history: action.payload.history };
+    case LIKED_VIDEOS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        likedVideos: action.payload.likedVideos,
+      };
     case WATCHLATER_FAIL:
     case HISTORY_FAIL:
     case WATCHLATER_ADD_FAIL:
     case HISTORY_ADD_FAIL:
     case WATCHLATER_REMOVE_FAIL:
     case HISTORY_REMOVE_FAIL:
+    case LIKED_VIDEOS_FAIL:
       return { ...state, loading: false, error: action.payload.message };
     case CLEAR_ERROR:
       return { ...state, error: null };

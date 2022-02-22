@@ -58,6 +58,9 @@ import {
   PLAYLIST_VIDEO_REMOVE_FAIL,
   CLEAR_ERROR,
   CLEAR_MESSAGE,
+  LIKED_VIDEOS_REQUEST,
+  LIKED_VIDEOS_SUCCESS,
+  LIKED_VIDEOS_FAIL,
 } from "../constants/userConstant";
 import axios from "axios";
 
@@ -437,6 +440,29 @@ export const removePlaylistVideo = (userdata) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: PLAYLIST_VIDEO_REMOVE_FAIL,
+      payload: error.response.data,
+    });
+  }
+};
+
+// get user's liked videos
+export const getLikedVideos = () => async (dispatch) => {
+  try {
+    dispatch({ type: LIKED_VIDEOS_REQUEST });
+    const videolibrarytoken = localStorage.getItem("videolibrarytoken");
+    const config = {
+      headers: {
+        Authorization: videolibrarytoken,
+      },
+    };
+    const { data } = await axios.get(
+      `http://localhost:5000/api/v1/user/liked`,
+      config
+    );
+    dispatch({ type: LIKED_VIDEOS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: LIKED_VIDEOS_FAIL,
       payload: error.response.data,
     });
   }

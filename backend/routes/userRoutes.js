@@ -21,6 +21,7 @@ const {
   getPlaylists,
   addVideoPlaylist,
   removeVideoPlaylist,
+  getLikedVideos,
 } = require("../controllers/userController");
 const authMiddleware = require("../middlewares/auth");
 
@@ -56,5 +57,7 @@ router.route("/playlists/add/video").post(authMiddleware, addVideoPlaylist);
 router
   .route("/playlists/remove/video")
   .post(authMiddleware, removeVideoPlaylist);
+
+router.route("/liked").get(authMiddleware, getLikedVideos);
 
 module.exports = router;
