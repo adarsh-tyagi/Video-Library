@@ -52,9 +52,9 @@ export const videosReducer = (
       return {
         ...state,
         loading: false,
-        allVideos: action.payload.allVideos,
-        popularVideos: action.payload.popularVideos,
-        latestVideos: action.payload.latestVideos,
+        allVideos: action.payload.all_videos,
+        popularVideos: action.payload.popular_videos,
+        latestVideos: action.payload.latest_videos,
       };
     case SEARCH_VIDEOS_SUCCESS:
       return {

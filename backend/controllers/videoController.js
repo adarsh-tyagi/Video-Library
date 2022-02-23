@@ -22,7 +22,9 @@ exports.getHomeVideos = catchAsyncErrors(async (req, res, next) => {
 // search videos
 exports.searchVideos = catchAsyncErrors(async (req, res, next) => {
   const exp = new RegExp(req.query.search, "ig");
-  const searchResults = await Video.find({ title: exp }).limit(5);
+  const searchResults = await Video.find({ title: exp })
+    .populate("owner")
+    .limit(5);
   res.status(200).json({ success: true, searchResults });
 });
 

@@ -10,3 +10,8 @@
   background-color: #0f1213;
   color: white;
 }
+
+a {
+  text-decoration: none;
+  color: white;
+}
