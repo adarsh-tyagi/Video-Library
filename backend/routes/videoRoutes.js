@@ -23,6 +23,6 @@ router.route("/create").post(authMiddleware, createVideo);
 router.route("/delete").post(authMiddleware, deleteVideo);
 router.route("/like").post(authMiddleware, toggleLikeVideo);
 router.route("/dislike").post(authMiddleware, toggleDislikeVideo);
-router.route("/details").get(authMiddleware, getVideoDetails);
+router.route("/details/:videoId").get(authMiddleware, getVideoDetails);
 
 module.exports = router;

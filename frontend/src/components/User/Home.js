@@ -1,16 +1,15 @@
 import React, { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useAlert } from "react-alert";
-import { useNavigate, Link } from "react-router-dom";
 import { clearError, getHomeVideos } from "../../actions/videoAction";
 import Loader from "../Loader/Loader";
+import VideoCard from "../Video/VideoCard";
 
 const Home = () => {
   const { loading, error, allVideos, popularVideos, latestVideos } =
     useSelector((state) => state.videos);
   const dispatch = useDispatch();
   const alert = useAlert();
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (error) {
@@ -25,19 +24,27 @@ const Home = () => {
       {loading ? (
         <Loader />
       ) : (
-        <div>
+        <div className="home__container">
           <h1>Latest Videos</h1>
-          {latestVideos?.map((vid) => (
-            <p>Video</p>
-          ))}
+          <div className="home__videos">
+            {latestVideos?.map((vid) => (
+              <VideoCard key={vid._id} video={vid} />
+            ))}
+          </div>
+
           <h1>Popular Video</h1>
-          {popularVideos?.map((vid) => (
-            <p>Video</p>
-          ))}
+          <div className="home__videos">
+            {popularVideos?.map((vid) => (
+              <VideoCard key={vid._id} video={vid} />
+            ))}
+          </div>
+
           <h1>Watch All Videos</h1>
-          {allVideos?.map((vid) => (
-            <p>Video</p>
-          ))}
+          <div className="home__videos">
+            {allVideos?.map((vid) => (
+              <VideoCard key={vid._id} video={vid} />
+            ))}
+          </div>
         </div>
       )}
     </Fragment>

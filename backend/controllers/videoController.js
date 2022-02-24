@@ -61,7 +61,7 @@ exports.createVideo = catchAsyncErrors(async (req, res, next) => {
 
 // get video details
 exports.getVideoDetails = catchAsyncErrors(async (req, res, next) => {
-  const video = await Video.find({ _id: req.body.videoId }).populate("owner");
+  const video = await Video.find({ _id: req.params.videoId }).populate("owner");
   res.status(200).json({ success: true, video });
 });
 

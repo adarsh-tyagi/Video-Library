@@ -137,7 +137,7 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
 
   // const resetPasswordUrl = `${req.protocol}://${req.get('host')}/password/reset/${resetToken}`
   const resetPasswordUrl = `${process.env.FRONTEND_URL}/password/reset/${resetToken}`;
-  const message = `You are receiving this email because you (or someone else) has requested the reset of a password.\n${resetPasswordUrl}\n\nIf you did not request this, please ignore this email and your password will remain unchanged.`;
+  const message = `You are receiving this email because you (or someone else) has requested the reset of a password.\n${resetPasswordUrl}\n\nIf you did not request this, please ignore this email and your password will remain unchanged.\nVideoLibrary Team`;
   try {
     await sendMail({
       email: user.email,

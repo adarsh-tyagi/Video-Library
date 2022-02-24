@@ -128,7 +128,7 @@ export const videoDetailReducer = (state = { video: {} }, action) => {
       return {
         ...state,
         loading: false,
-        video: action.payload.video,
+        video: action.payload.video[0],
       };
     case TOGGLE_LIKE_FAIL:
     case TOGGLE_DISLIKE_FAIL:

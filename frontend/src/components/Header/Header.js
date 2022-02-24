@@ -102,7 +102,7 @@ const Header = ({ isAuthenticated, user }) => {
       <div className="header__3">
         {isAuthenticated ? (
           <Link to="/profile">
-            <img href={user?.avatar?.url} alt="user_profile_pic" />
+            <img src={user?.avatar.url} alt="user_profile_pic" />
           </Link>
         ) : (
           <Link to="/signin">Sign In</Link>
@@ -118,7 +118,7 @@ const Header = ({ isAuthenticated, user }) => {
         onClick={closeHandler}
       >
         {loading ? (
-          <h1>Loading...</h1>
+          <h1 className="loading__msg">Loading...</h1>
         ) : (
           searchResults?.map((item) => (
             <Link to={`/video/${String(item._id)}`} key={item._id}>

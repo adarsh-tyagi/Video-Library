@@ -207,8 +207,7 @@ export const getVideoDetails = (videoId) => async (dispatch) => {
       },
     };
     const { data } = await axios.get(
-      `http://localhost:5000/api/v1/video/details`,
-      { videoId },
+      `http://localhost:5000/api/v1/video/details/${videoId}`,
       config
     );
     dispatch({ type: VIDEO_DEATILS_SUCCESS, payload: data });

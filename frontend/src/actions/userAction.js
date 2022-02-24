@@ -109,7 +109,7 @@ export const logout = () => async (dispatch) => {
       },
     };
     const { data } = await axios.get(
-      "http://localhost:5000//api/v1/user/logout",
+      "http://localhost:5000/api/v1/user/logout",
       config
     );
     localStorage.removeItem("videolibrarytoken");

@@ -18,13 +18,13 @@ module.exports = async (err, req, res, next) => {
 
   // invalid jsonwebtoken error
   if (err.name === "JsonWebTokenError") {
-    const message = "Json web token is invalid. Try again";
+    const message = "Please login to access the resources";
     err = new ErrorHandler(message, 400);
   }
 
   // expired jsonwebtoken error
   if (err.name === "TokenExpiredError") {
-    const message = "Json web token has expired. Try again";
+    const message = "Currently logged out";
     err = new ErrorHandler(message, 400);
   }
 

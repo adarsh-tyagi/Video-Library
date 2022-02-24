@@ -148,6 +148,8 @@ export const profileReducer = (state = {}, action) => {
       return { ...state, isUpdated: false };
     case CLEAR_ERROR:
       return { ...state, error: null };
+    case CLEAR_MESSAGE:
+      return { ...state, message: null };
     default:
       return state;
   }
@@ -158,7 +160,7 @@ export const passwordReducer = (state = {}, action) => {
   switch (action.type) {
     case FORGOT_PASSWORD_REQUEST:
     case RESET_PASSWORD_REQUEST:
-      return { ...state, loading: true };
+      return { ...state, loading: true, success: false };
     case FORGOT_PASSWORD_SUCCESS:
       return {
         ...state,
