@@ -66,14 +66,14 @@ export const videosReducer = (
       return {
         ...state,
         loading: false,
-        userVideos: action.payload.userVideos,
+        userVideos: action.payload.user_videos,
       };
 
     case VIDEO_LIST_SUCCESS:
       return {
         ...state,
         loading: false,
-        videosList: action.payload.videosList,
+        videosList: action.payload.videos_list,
       };
     case HOME_VIDEOS_FAIL:
     case SEARCH_VIDEOS_FAIL:

@@ -226,7 +226,7 @@ export const watchHistoryReducer = (
         message: action.payload.message,
       };
     case HISTORY_REMOVE_SUCCESS:
-      return { ...state, loading: false, history: action.payload.history };
+      return { ...state, loading: false, history: action.payload.historyList };
     case LIKED_VIDEOS_SUCCESS:
       return {
         ...state,

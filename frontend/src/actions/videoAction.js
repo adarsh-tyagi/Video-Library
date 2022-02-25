@@ -101,7 +101,7 @@ export const getVideoList = (videos_list) => async (dispatch) => {
         Authorization: videolibrarytoken,
       },
     };
-    const { data } = await axios.get(
+    const { data } = await axios.post(
       `http://localhost:5000/api/v1/video/list`,
       { videos_list },
       config

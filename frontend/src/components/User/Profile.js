@@ -11,6 +11,7 @@ import {
 } from "../../actions/userAction";
 import { DELETE_USER_RESET } from "../../constants/userConstant";
 import Loader from "../Loader/Loader";
+import UploadIcon from "@mui/icons-material/Upload";
 
 const Profile = () => {
   const { loading, isAuthenticated, user, error } = useSelector(
@@ -61,7 +62,7 @@ const Profile = () => {
             <a href="/profile/update">Edit Profile</a>
           </div>
           <div className="container__two">
-            <Link to="/video/upload">Upload your video</Link>
+            <Link to="/video/upload"><UploadIcon /> Upload your video</Link>
             <p>{user?.name}</p>
             <p>{user?.email}</p>
             <p>{"Joined on " + user?.created_at.substring(0, 10)}</p>

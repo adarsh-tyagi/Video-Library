@@ -5,7 +5,7 @@ const sendMail = require("../utils/sendEmail");
 const crypto = require("crypto");
 const cloudinary = require("cloudinary");
 const bcrypt = require("bcryptjs");
-const Video = require("../models/videoModel")
+const Video = require("../models/videoModel");
 
 // register user
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
@@ -258,9 +258,18 @@ exports.createPlaylist = catchAsyncErrors(async (req, res, next) => {
   };
   req.user.playlists.push(new_playlist);
   await req.user.save();
+  var playlists = [];
+  for (let list of req.user.playlists) {
+    var videos = [];
+    for (let id of list.videos) {
+      const video = await Video.find({ _id: id }).populate("owner");
+      videos.push(video[0]);
+    }
+    playlists.push({ name: list.name, videos });
+  }
   res.status(201).json({
     success: true,
-    playlists: req.user.playlists,
+    playlists,
     message: "New playlist created",
   });
 });
@@ -275,16 +284,34 @@ exports.removePlaylist = catchAsyncErrors(async (req, res, next) => {
     req.user.playlists.splice(index, 1);
   }
   await req.user.save();
+  var playlists = [];
+  for (let list of req.user.playlists) {
+    var videos = [];
+    for (let id of list.videos) {
+      const video = await Video.find({ _id: id }).populate("owner");
+      videos.push(video[0]);
+    }
+    playlists.push({ name: list.name, videos });
+  }
   res.status(200).json({
     success: true,
-    playlists: req.user.playlists,
+    playlists,
     message: "Playlist removed",
   });
 });
 
 // fetch all playlists
 exports.getPlaylists = catchAsyncErrors(async (req, res, next) => {
-  res.status(200).json({ success: true, playlists: req.user.playlists });
+  var playlists = [];
+  for (let list of req.user.playlists) {
+    var videos = [];
+    for (let id of list.videos) {
+      const video = await Video.find({ _id: id }).populate("owner");
+      videos.push(video[0]);
+    }
+    playlists.push({ name: list.name, videos });
+  }
+  res.status(200).json({ success: true, playlists });
 });
 
 // add video to a playlist
@@ -300,11 +327,18 @@ exports.addVideoPlaylist = catchAsyncErrors(async (req, res, next) => {
     }
   }
   await req.user.save();
-  console.log(req.user.playlists[1].videos);
-  console.log(req.user.playlists);
+  var playlists = [];
+  for (let list of req.user.playlists) {
+    var videos = [];
+    for (let id of list.videos) {
+      const video = await Video.find({ _id: id }).populate("owner");
+      videos.push(video[0]);
+    }
+    playlists.push({ name: list.name, videos });
+  }
   res.status(201).json({
     success: true,
-    playlists: req.user.playlists,
+    playlists,
     message: `Video added to playlist ${playlistName}`,
   });
 });
@@ -322,21 +356,30 @@ exports.removeVideoPlaylist = catchAsyncErrors(async (req, res, next) => {
     }
   }
   await req.user.save();
+  var playlists = [];
+  for (let list of req.user.playlists) {
+    var videos = [];
+    for (let id of list.videos) {
+      const video = await Video.find({ _id: id }).populate("owner");
+      videos.push(video[0]);
+    }
+    playlists.push({ name: list.name, videos });
+  }
   res.status(200).json({
     success: true,
-    playlists: req.user.playlists,
+    playlists,
     message: `Video removed from playlist ${playlistName}`,
   });
 });
 
 // get liked videos
 exports.getLikedVideos = catchAsyncErrors(async (req, res, next) => {
-  const all_videos = await Video.find({}).populate("owner")
-  var likedVideos = []
+  const all_videos = await Video.find({}).populate("owner");
+  var likedVideos = [];
   for (let video of all_videos) {
     if (video.likes.includes(String(req.user._id))) {
-      likedVideos.push(video)
+      likedVideos.push(video);
     }
   }
-  res.status(200).json({success: true, likedVideos})
-})
+  res.status(200).json({ success: true, likedVideos });
+});

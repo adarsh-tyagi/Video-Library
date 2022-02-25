@@ -41,9 +41,11 @@ exports.fetchVideosList = catchAsyncErrors(async (req, res, next) => {
 // create new video
 exports.createVideo = catchAsyncErrors(async (req, res, next) => {
   const { title, description, video } = req.body;
+  console.log(req.body)
   const myCloud = await cloudinary.v2.uploader.upload(video, {
     folder: "videoLibrary-videos",
   });
+  console.log(myCloud)
   const newVideo = await Video.create({
     title,
     description,
@@ -67,6 +69,11 @@ exports.getVideoDetails = catchAsyncErrors(async (req, res, next) => {
 
 // delete video
 exports.deleteVideo = catchAsyncErrors(async (req, res, next) => {
+  const user_video = await Video.find({
+    _id: req.body.videoId,
+    owner: req.user._id,
+  });
+  await cloudinary.v2.uploader.destroy(user_video.video.public_id);
   await Video.deleteOne({ _id: req.body.videoId, owner: req.user._id });
   res
     .status(200)
@@ -75,7 +82,7 @@ exports.deleteVideo = catchAsyncErrors(async (req, res, next) => {
 
 // fetch user's video
 exports.fetchUserVideo = catchAsyncErrors(async (req, res, next) => {
-  const user_videos = await Video.find({ owner: req.user._id });
+  const user_videos = await Video.find({ owner: req.user._id }).populate("owner");
   res.status(200).json({ success: true, user_videos });
 });
 
@@ -87,6 +94,10 @@ exports.toggleLikeVideo = catchAsyncErrors(async (req, res, next) => {
   }
   if (video.likes.includes(String(req.user._id))) {
     video.likes = video.likes.filter((like) => like !== String(req.user._id));
+    await video.save();
+    return res
+      .status(200)
+      .json({ success: true, video, message: "Removed your like" });
   } else {
     video.likes.push(String(req.user._id));
   }
@@ -106,6 +117,10 @@ exports.toggleDislikeVideo = catchAsyncErrors(async (req, res, next) => {
     video.dislikes = video.dislikes.filter(
       (dislike) => dislike != String(req.user._id)
     );
+    await video.save();
+    return res
+      .status(200)
+      .json({ success: true, video, message: "Removed your dislike" });
   } else {
     video.dislikes.push(String(req.user._id));
   }

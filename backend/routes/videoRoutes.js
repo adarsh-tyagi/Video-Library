@@ -18,7 +18,7 @@ const authMiddleware = require("../middlewares/auth");
 router.route("/").get(getHomeVideos);
 router.route("/search").get(searchVideos);
 router.route("/user/videos").get(authMiddleware, fetchUserVideo);
-router.route("/list").get(authMiddleware, fetchVideosList);
+router.route("/list").post(authMiddleware, fetchVideosList);
 router.route("/create").post(authMiddleware, createVideo);
 router.route("/delete").post(authMiddleware, deleteVideo);
 router.route("/like").post(authMiddleware, toggleLikeVideo);
