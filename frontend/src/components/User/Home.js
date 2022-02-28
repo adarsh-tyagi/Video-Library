@@ -4,6 +4,7 @@ import { useAlert } from "react-alert";
 import { clearError, getHomeVideos } from "../../actions/videoAction";
 import Loader from "../Loader/Loader";
 import VideoCard from "../Video/VideoCard";
+import "./Home.css";
 
 const Home = () => {
   const { loading, error, allVideos, popularVideos, latestVideos } =

@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { searchVideos } from "../../actions/videoAction";
 import Backdrop from "@mui/material/Backdrop";
 import ReactPlayer from "react-player";
+import "./Header.css"
 
 const Header = ({ isAuthenticated, user }) => {
   const [search, setSearch] = useState("");
@@ -49,8 +50,11 @@ const Header = ({ isAuthenticated, user }) => {
           <MenuIcon onClick={() => setOpen(true)} />
         ) : (
           <div className="header__sidebar">
-            <CloseIcon onClick={() => setOpen(false)} />
-            <h1>VideoLibrary</h1>
+            <div className="header__sidebar__1">
+              <CloseIcon onClick={() => setOpen(false)} />
+              VideoLibrary
+            </div>
+
             <div className="nav__links">
               <Link to="/" onClick={() => setOpen(false)}>
                 <HomeIcon />
@@ -86,7 +90,13 @@ const Header = ({ isAuthenticated, user }) => {
             </div>
           </div>
         )}
-        {!screen ? <Link to="/">VideoLibrary</Link> : ""}
+        {!screen ? (
+          <Link className="heading" to="/">
+            VideoLibrary
+          </Link>
+        ) : (
+          ""
+        )}
       </div>
 
       <div className="header__2">

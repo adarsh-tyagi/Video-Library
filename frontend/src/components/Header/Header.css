@@ -1,0 +1,115 @@
+.header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid #404040;
+    height: 5rem;
+    background-color: black;
+    flex: 1;
+    z-index: 10;
+}
+
+.header__1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.header__1 > svg{
+    color: white;
+    font-size: 3rem;
+}
+.header__1 > svg:hover{
+    cursor: pointer;
+}
+
+.heading{
+    font-size: 1.5rem;
+    color: white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: red;
+}
+
+.header__3 img{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    transition: 400ms;
+}
+.header__3 img:hover{
+    width: 65px;
+    height: 65px;
+}
+
+.header__2{
+    flex: 0.5;
+    min-width: 250px;
+}
+.header__2 > form{
+    width: 100%;
+}
+.header__2 > form > input{
+    width: 100%;
+    background-color: transparent;
+    color: white;
+    outline: none;
+    border: 2px solid #404040;
+    padding: 0.5rem 0.75rem;
+    font-size: 1.1rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    border-radius: 5px;
+}
+
+.header__sidebar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    max-width: 400px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: black;
+    z-index: 100;
+    padding: 1rem ;
+}
+.header__sidebar__1{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: red;
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+}
+.header__sidebar__1 > svg{
+    color: white;
+    font-size: 3rem;
+    cursor: pointer;
+}
+
+.nav__links{
+    display: flex;
+    flex-direction: column;
+}
+
+.nav__links > a{
+    margin: 0.75rem 0;
+    font-size: 1.1rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    display: flex;
+    align-items: center;
+    transition: 300ms;
+}
+.nav__links > a > svg{
+    font-size: 2rem;
+    margin-right: 1rem;
+}
+
+.nav__links > a:hover{
+    color: red;
+}
