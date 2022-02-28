@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
 import {
   clearError,
   clearMessage,
@@ -19,7 +20,7 @@ const VideoUpload = () => {
   );
   const dispatch = useDispatch();
   const alert = useAlert();
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const videoDataChange = (e) => {
     if (e.target.name === "video") {
@@ -43,8 +44,7 @@ const VideoUpload = () => {
     myForm.set("title", title);
     myForm.set("description", description);
     myForm.set("video", video);
-    dispatch(createVideo(myForm));
-    navigate("/profile");
+    dispatch(createVideo({ title, description, video }));
   };
 
   useEffect(() => {
@@ -55,8 +55,9 @@ const VideoUpload = () => {
     if (message) {
       alert.success(message);
       dispatch(clearMessage());
+      navigate("/profile")
     }
-  }, [alert, message, dispatch, error]);
+  }, [alert, message, dispatch, error, navigate]);
 
   return (
     <Fragment>

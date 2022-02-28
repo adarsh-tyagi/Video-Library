@@ -1,17 +1,31 @@
 import React, { Fragment, useEffect } from "react";
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
-import { clearError, getUserVideos } from "../../actions/videoAction";
+import {
+  clearError,
+  deleteVideo,
+  getUserVideos,
+  clearMessage,
+} from "../../actions/videoAction";
 import Loader from "../Loader/Loader";
 import VideoCard from "./VideoCard";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useNavigate } from "react-router-dom";
 
 const UserVideos = () => {
   const { loading, error, userVideos } = useSelector((state) => state.videos);
+  const {
+    loading: videoLoading,
+    message,
+    error: videoError,
+  } = useSelector((state) => state.videoCreation);
   const dispatch = useDispatch();
   const alert = useAlert();
+  const navigate = useNavigate();
 
-  const deleteHandler = () => {};
+  const deleteHandler = (videoId) => {
+    dispatch(deleteVideo(String(videoId)));
+  };
 
   useEffect(() => {
     dispatch(getUserVideos());
@@ -22,11 +36,21 @@ const UserVideos = () => {
       alert.error(error);
       dispatch(clearError());
     }
-  }, [dispatch, alert, error]);
+    if (videoError) {
+      alert.error(videoError);
+      dispatch(clearError());
+    }
+    if (message) {
+      alert.success(message);
+      dispatch(clearMessage());
+      dispatch(getUserVideos());
+      navigate("/user/videos");
+    }
+  }, [dispatch, alert, error, message, videoError, navigate]);
 
   return (
     <Fragment>
-      {loading ? (
+      {loading || videoLoading ? (
         <Loader />
       ) : (
         <div className="uservideoslist__container">
@@ -35,7 +59,10 @@ const UserVideos = () => {
             {userVideos?.map((video) => (
               <div key={video._id} className="uservideo__container">
                 <VideoCard video={video} />
-                <button className="dlt-btn" onClick={deleteHandler}>
+                <button
+                  className="dlt-btn"
+                  onClick={() => deleteHandler(String(video._id))}
+                >
                   <DeleteIcon /> DELETE
                 </button>
               </div>

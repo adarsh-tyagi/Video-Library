@@ -2,6 +2,7 @@ const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 const Video = require("../models/videoModel");
 const cloudinary = require("cloudinary");
+const User = require("../models/userModel");
 
 // get home videos
 exports.getHomeVideos = catchAsyncErrors(async (req, res, next) => {
@@ -41,19 +42,26 @@ exports.fetchVideosList = catchAsyncErrors(async (req, res, next) => {
 // create new video
 exports.createVideo = catchAsyncErrors(async (req, res, next) => {
   const { title, description, video } = req.body;
-  console.log(req.body)
   const myCloud = await cloudinary.v2.uploader.upload(video, {
+    resource_type: "video",
     folder: "videoLibrary-videos",
+    chunk_size: 6000000,
+    eager: [
+      { width: 300, height: 300, crop: "pad", audio_codec: "none" },
+      {
+        width: 160,
+        height: 100,
+        crop: "crop",
+        gravity: "south",
+        audio_codec: "none",
+      },
+    ],
+    eager_async: true,
   });
-  console.log(myCloud)
   const newVideo = await Video.create({
     title,
     description,
     owner: req.user._id,
-    // video: {
-    //   public_id: "samples/elephants",
-    //   url: "https://res.cloudinary.com/dpsyvbeem/video/upload/v1634397373/samples/elephants.mp4",
-    // },
     video: { public_id: myCloud.public_id, url: myCloud.secure_url },
   });
   res
@@ -73,16 +81,43 @@ exports.deleteVideo = catchAsyncErrors(async (req, res, next) => {
     _id: req.body.videoId,
     owner: req.user._id,
   });
-  await cloudinary.v2.uploader.destroy(user_video.video.public_id);
-  await Video.deleteOne({ _id: req.body.videoId, owner: req.user._id });
-  res
-    .status(200)
-    .json({ success: true, message: "Video deleted successfully" });
+
+  const success = await cloudinary.v2.uploader.destroy(
+    user_video[0].video.public_id,
+    { resource_type: "video" }
+  );
+  if (success) {
+    const all_users = await User.find({});
+    for (let user of all_users) {
+      const index1 = user.watchLater.indexOf(String(req.body.videoId));
+      if (index1 > -1) {
+        user.watchLater.splice(index1, 1);
+      }
+      const index2 = user.history.indexOf(String(req.body.videoId));
+      if (index2 > -1) {
+        user.history.splice(index2, 1);
+      }
+      for (let playlist of user.playlists) {
+        const index3 = playlist.videos.indexOf(String(req.body.videoId));
+        if (index3 > -1) {
+          playlist.videos.splice(index3, 1);
+        }
+      }
+      await user.save();
+    }
+    const deleted_video = await Video.deleteOne({ _id: req.body.videoId, owner: req.user._id });
+    return res
+      .status(200)
+      .json({ success: true, message: "Video deleted successfully" });
+  }
+  next(new ErrorHandler("Someting went wrong", 500));
 });
 
 // fetch user's video
 exports.fetchUserVideo = catchAsyncErrors(async (req, res, next) => {
-  const user_videos = await Video.find({ owner: req.user._id }).populate("owner");
+  const user_videos = await Video.find({ owner: req.user._id }).populate(
+    "owner"
+  );
   res.status(200).json({ success: true, user_videos });
 });
 

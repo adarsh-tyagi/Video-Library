@@ -58,14 +58,14 @@ const Profile = () => {
         <div className="profile__container">
           <div className="container__one">
             <h1>Profile</h1>
-            <img src={user?.avatar.url} alt={user?.name} />
+            <img src={user?.avatar?.url} alt={user?.name} />
             <a href="/profile/update">Edit Profile</a>
           </div>
           <div className="container__two">
             <Link to="/video/upload"><UploadIcon /> Upload your video</Link>
             <p>{user?.name}</p>
             <p>{user?.email}</p>
-            <p>{"Joined on " + user?.created_at.substring(0, 10)}</p>
+            <p>{"Joined on " + user?.created_at?.substring(0, 10)}</p>
             <Link to="/user/videos">My videos</Link>
             <button onClick={logoutHandler}>Logout</button>
             <button className="delete" onClick={deleteHandler}>

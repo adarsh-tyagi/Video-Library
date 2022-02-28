@@ -148,6 +148,7 @@ export const deleteVideo = (videoId) => async (dispatch) => {
       { videoId },
       config
     );
+
     dispatch({ type: DELETE_VIDEO_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: DELETE_VIDEO_FAIL, payload: error.response.data });
@@ -218,8 +219,8 @@ export const getVideoDetails = (videoId) => async (dispatch) => {
 
 // clear errors
 export const clearError = () => async (dispatch) => {
-    dispatch({type: CLEAR_ERROR})
-}
+  dispatch({ type: CLEAR_ERROR });
+};
 
 // clear messages
 export const clearMessage = () => async (dispatch) => {
