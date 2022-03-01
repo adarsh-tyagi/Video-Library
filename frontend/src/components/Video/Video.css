@@ -1,0 +1,206 @@
+.videodetails__container {
+  padding-top: 6rem;
+}
+
+.video__player {
+  width: 100%;
+  height: 550px;
+}
+
+@media (max-width: 900px) {
+  .videodetails__container {
+    padding-top: 3rem;
+  }
+}
+@media (max-width: 750px) {
+  .videodetails__container {
+    padding-top: 6rem;
+  }
+  .video__player {
+    height: 100%;
+  }
+}
+
+.videodetails__info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  border-bottom: 2px solid #404040;
+}
+.videodetails__info > h1 {
+  font-weight: normal;
+  font-size: 1.2rem;
+}
+
+.videodetails__icons {
+  display: flex;
+  flex: 0.7;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.video__icon {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  cursor: pointer;
+  transition: 400ms;
+}
+.video__icon:hover{
+    color: red;
+}
+
+.video__icon > svg {
+  margin-right: 0.3rem;
+}
+.video__icon > span{
+    font-size: 0.9rem;
+}
+
+.videodetails__desc{
+    padding: 1.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.videodetails__owner{
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.videodetails__owner > img{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-right: 1.5rem;
+}
+.videodetails__owner > p{
+    color: #aaa;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.videodetails__desc > p{
+    font-size: 1rem;
+}
+
+
+@media (max-width: 1100px){
+    .videodetails__icons{
+        flex: 0.8
+    }
+}
+
+@media (max-width: 900px){
+    .videodetails__icons{
+        flex: 0.85;
+    }
+}
+
+@media (max-width: 800px){
+    .videodetails__info{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .videodetails__info > h1{
+        margin-bottom: 1rem;
+    }
+    .videodetails__icons{
+        width: 100%;
+    }
+}
+@media (max-width: 550px){
+    .videodetails__icons{
+        justify-content: space-between;
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+@media (max-width: 500px){
+    .video__icon > span{
+        font-size: 0.7rem;
+    }
+}
+
+.modal__heading{
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 1.2rem;
+  font-weight: normal;
+  margin-bottom: 1rem;
+}
+
+.video__playlists{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.video__playlists > div{
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.7rem;
+}
+
+.video__playlists > div > input{
+  margin-right: 0.5rem;
+}
+.video__playlists > div > p{
+  font-size: 1.1rem;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+input.larger{
+  width: 20px;
+  height: 20px;
+  outline: none;
+  border: none;
+}
+
+.video__playlistcreate{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.video__playlistcreate > svg{
+  margin-right: 0.5rem;
+  cursor: pointer;
+  color: red;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.video__playlistinput{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.video__playlistinput > input{
+  outline: none;
+  border: none;
+  width: 100%;
+  font-size: 1rem;
+  padding: 0.3rem 0.5rem;
+}
+.video__playlistinput > button{
+  outline: none;
+  border: 2px solid red;
+  font-size: 1rem;
+  padding: 0.3rem 0.5rem;
+  cursor: pointer;
+  background: transparent;
+  color: red;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  margin-top: 0.5rem;
+  transition: 300ms;
+}
+.video__playlistinput > button:hover{
+  color: white;
+  background: red;
+}

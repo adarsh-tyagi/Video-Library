@@ -5,6 +5,7 @@ import { clearError, getHomeVideos } from "../../actions/videoAction";
 import Loader from "../Loader/Loader";
 import VideoCard from "../Video/VideoCard";
 import "./Home.css";
+import MetaData from "../MetaData";
 
 const Home = () => {
   const { loading, error, allVideos, popularVideos, latestVideos } =
@@ -22,6 +23,7 @@ const Home = () => {
 
   return (
     <Fragment>
+      <MetaData title="Video Library | Home" />
       {loading ? (
         <Loader />
       ) : (

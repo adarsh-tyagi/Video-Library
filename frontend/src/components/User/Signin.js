@@ -13,6 +13,8 @@ import {
   clearError,
   clearMessage,
 } from "../../actions/userAction";
+import "./Signin.css"
+import MetaData from "../MetaData"
 
 const Signin = () => {
   const dispatch = useDispatch();
@@ -81,6 +83,7 @@ const Signin = () => {
 
   return (
     <Fragment>
+      <MetaData title="Login" />
       <div className="login__container">
         <div className="switch__btn">
           <button

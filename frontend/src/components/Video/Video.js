@@ -30,6 +30,8 @@ import {
 } from "../../actions/userAction";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
+import "./Video.css";
+import MetaData from "../MetaData";
 
 const style = {
   position: "absolute",
@@ -157,18 +159,22 @@ const Video = () => {
 
   return (
     <Fragment>
+      <MetaData title={video?.title} />
       {loading ? (
         <Loader />
       ) : (
         <div className="videodetails__container">
-          <ReactPlayer
-            url={video?.video?.url}
-            controls={true}
-            height="100%"
-            width="100%"
-            playing={true}
-            onStart={addHistoryFn}
-          />
+          <div className="video__player">
+            <ReactPlayer
+              url={video?.video?.url}
+              controls={true}
+              height="100%"
+              width="100%"
+              playing={true}
+              onStart={addHistoryFn}
+            />
+          </div>
+
           <div className="videodetails__info">
             <h1>{video?.title}</h1>
             <div className="videodetails__icons">
@@ -218,13 +224,14 @@ const Video = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <h3>Add to Playlist</h3>
+          <h3 className="modal__heading">Add to Playlist</h3>
 
           <div className="video__playlists">
             {playlists?.map((list) => (
               <div key={list._id}>
                 <input
                   type="checkbox"
+                  className="larger"
                   value={list.name}
                   checked={list.videos.find(
                     (item) => String(item._id) === String(video._id)

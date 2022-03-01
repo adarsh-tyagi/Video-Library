@@ -9,6 +9,7 @@ import {
   forgotPassword,
 } from "../../actions/userAction";
 import { useNavigate } from "react-router-dom";
+import MetaData from "../MetaData";
 
 const ForgotPassword = () => {
   const { loading, message, error, success } = useSelector(
@@ -41,10 +42,11 @@ const ForgotPassword = () => {
 
   return (
     <Fragment>
+      <MetaData title="Forgot Password" />
       {loading ? (
         <Loader />
       ) : (
-        <div className="update__container">
+        <div className="login__container">
           <form encType="multipart/form-data" onSubmit={submitHandler}>
             <div>
               <EmailIcon />

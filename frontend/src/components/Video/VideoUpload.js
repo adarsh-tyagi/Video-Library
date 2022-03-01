@@ -9,6 +9,8 @@ import {
   createVideo,
 } from "../../actions/videoAction";
 import Uploader from "../Uploader/Uploader";
+import "./VideoUpload.css";
+import MetaData from "../MetaData";
 
 const VideoUpload = () => {
   const [title, setTitle] = useState("");
@@ -20,7 +22,7 @@ const VideoUpload = () => {
   );
   const dispatch = useDispatch();
   const alert = useAlert();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const videoDataChange = (e) => {
     if (e.target.name === "video") {
@@ -55,18 +57,21 @@ const VideoUpload = () => {
     if (message) {
       alert.success(message);
       dispatch(clearMessage());
-      navigate("/profile")
+      navigate("/profile");
     }
   }, [alert, message, dispatch, error, navigate]);
 
   return (
     <Fragment>
+      <MetaData title="Upload Video" />
       {loading ? (
         <Uploader />
       ) : (
-        <div>
+        <div className="videoupload__container">
+          <h1>Upload video</h1>
           <form encType="multipart/form-data" onSubmit={submitHandler}>
             <input
+              className="form__field"
               type="text"
               name="title"
               placeholder="Title"
@@ -75,6 +80,7 @@ const VideoUpload = () => {
               onChange={videoDataChange}
             />
             <textarea
+              className="form__field"
               placeholder="Description"
               name="description"
               value={description}
@@ -83,12 +89,13 @@ const VideoUpload = () => {
               onChange={videoDataChange}
             ></textarea>
             <input
+              className="form__field"
               type="file"
               accept="video/*"
               name="video"
               onChange={videoDataChange}
             />
-            <input type="submit" value="Upload" />
+            <input className="dlt-btn" type="submit" value="Upload" />
           </form>
         </div>
       )}

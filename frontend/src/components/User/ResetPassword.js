@@ -5,7 +5,8 @@ import Loader from "../Loader/Loader";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useAlert } from "react-alert";
-import {resetPassword, clearError, clearMessage} from "../../actions/userAction"
+import { resetPassword, clearError, clearMessage } from "../../actions/userAction"
+import MetaData from "../MetaData";
 
 const ResetPassword = () => {
   const { loading, message, error, success } = useSelector((state) => state.password);
@@ -37,10 +38,11 @@ const ResetPassword = () => {
 
   return (
     <Fragment>
+      <MetaData title="Reset Password" /> 
       {loading ? (
         <Loader />
       ) : (
-        <div className="update__container">
+        <div className="login__container">
           <form onSubmit={submitHandler}>
             <div>
               <PasswordIcon />

@@ -19,6 +19,7 @@ import Playlists from "./components/Video/Playlists";
 import UserVideos from "./components/Video/UserVideos";
 import Video from "./components/Video/Video";
 import VideoUpload from "./components/Video/VideoUpload";
+import ProtectRoute from "./components/ProtectRoute";
 
 function App() {
   const { loading, isAuthenticated, user } = useSelector((state) => state.user);
@@ -43,15 +44,51 @@ function App() {
               path="/password/reset/:token"
               element={<ResetPassword />}
             />
-            <Route exact path="/profile" element={<Profile />} />
-            <Route exact path="/profile/update" element={<UpdateProfile />} />
-            <Route exact path="/watchlater" element={<WatchLater />} />
-            <Route exact path="/history" element={<History />} />
-            <Route exact path="/liked" element={<LikedVideos />} />
-            <Route exact path="/playlists" element={<Playlists />} />
-            <Route exact path="/user/videos" element={<UserVideos />} />
-            <Route exact path="/video/:videoId" element={<Video />} />
-            <Route exact path="/video/upload" element={<VideoUpload />} />
+            <Route
+              exact
+              path="/profile"
+              element={<ProtectRoute component={Profile} />}
+            />
+            <Route
+              exact
+              path="/profile/update"
+              element={<ProtectRoute component={UpdateProfile} />}
+            />
+            <Route
+              exact
+              path="/watchlater"
+              element={<ProtectRoute component={WatchLater} />}
+            />
+            <Route
+              exact
+              path="/history"
+              element={<ProtectRoute component={History} />}
+            />
+            <Route
+              exact
+              path="/liked"
+              element={<ProtectRoute component={LikedVideos} />}
+            />
+            <Route
+              exact
+              path="/playlists"
+              element={<ProtectRoute component={Playlists} />}
+            />
+            <Route
+              exact
+              path="/user/videos"
+              element={<ProtectRoute component={UserVideos} />}
+            />
+            <Route
+              exact
+              path="/video/:videoId"
+              element={<ProtectRoute component={Video} />}
+            />
+            <Route
+              exact
+              path="/video/upload"
+              element={<ProtectRoute component={VideoUpload} />}
+            />
           </Routes>
         </Router>
       )}

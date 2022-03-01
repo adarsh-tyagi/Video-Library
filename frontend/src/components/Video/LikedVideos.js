@@ -10,6 +10,7 @@ import Loader from "../Loader/Loader";
 import VideoCard from "./VideoCard";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { toggleLike } from "../../actions/videoAction";
+import MetaData from "../MetaData";
 
 const LikedVideos = () => {
   const { loading, likedVideos, error, message } = useSelector(
@@ -51,6 +52,7 @@ const LikedVideos = () => {
 
   return (
     <Fragment>
+      <MetaData title="Liked Videos" />
       {loading ? (
         <Loader />
       ) : (

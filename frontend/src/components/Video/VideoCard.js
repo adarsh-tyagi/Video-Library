@@ -14,7 +14,7 @@ const VideoCard = ({ video }) => {
         <img src={video.owner.avatar.url} alt={video.owner.name} />
         <div className="videoCard__text">
           <p>{video.title}</p>
-          <p>{video.owner.name}</p>
+          <p className="owner">{video.owner.name}</p>
         </div>
       </div>
     </Link>

@@ -11,6 +11,7 @@ import Loader from "../Loader/Loader";
 import VideoCard from "./VideoCard";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useNavigate } from "react-router-dom";
+import MetaData from "../MetaData";
 
 const UserVideos = () => {
   const { loading, error, userVideos } = useSelector((state) => state.videos);
@@ -50,14 +51,15 @@ const UserVideos = () => {
 
   return (
     <Fragment>
+      <MetaData title="Your videos" />
       {loading || videoLoading ? (
         <Loader />
       ) : (
-        <div className="uservideoslist__container">
+        <div className="history__container">
           <h1>Your videos</h1>
-          <div className="uservideos__container">
+          <div className="videos__container">
             {userVideos?.map((video) => (
-              <div key={video._id} className="uservideo__container">
+              <div key={video._id} className="video__container">
                 <VideoCard video={video} />
                 <button
                   className="dlt-btn"

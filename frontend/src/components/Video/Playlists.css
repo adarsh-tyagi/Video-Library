@@ -1,0 +1,30 @@
+.playlists__container{
+    padding-top: 7rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.playlists__container > h1{
+    font-size: 1.2rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding-bottom: 1rem;
+    font-weight: normal;
+    border-bottom: 1px solid #404040;
+}
+
+.list__container{
+    padding-top: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #404040;
+}
+.list__class{
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+.list__class > p{
+    margin-right: 1rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 1.5rem;
+    font-weight: bold;
+}

@@ -15,3 +15,79 @@ a {
   text-decoration: none;
   color: white;
 }
+
+.dlt-btn{
+  cursor: pointer;
+  outline: none;
+  border: 2px solid red;
+  background-color: black;
+  color: red;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-family: monospace;
+  font-size: 1.1rem;
+  transition: 500ms;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+.dlt-btn:hover{
+  background-color: red;
+  color: white;
+}
+
+.dlt-btn-2{
+  cursor: pointer;
+  outline: none;
+  border: none;
+  background-color: red;
+  color: white;
+  padding: 0.5rem 0.75rem;
+  font-family: monospace;
+  font-size: 1.1rem;
+  transition: 500ms;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dlt-btn-2:hover{
+  background-color: rgb(143, 0, 0);
+}
+
+.logout{
+cursor: pointer;
+  outline: none;
+  border: 2px solid red;
+  background-color: black;
+  color: red;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-family: monospace;
+  font-size: 1.1rem;
+  transition: 500ms;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+.logout:hover{
+ background-color: red;
+  color: white;
+}
+
+.delete{
+cursor: pointer;
+  outline: none;
+  border: none;
+  background-color: red;
+  color: white;
+  padding: 0.5rem 0.75rem;
+  font-family: monospace;
+  font-size: 1.1rem;
+  transition: 500ms;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.delete:hover{
+background-color: rgb(143, 0, 0);
+}

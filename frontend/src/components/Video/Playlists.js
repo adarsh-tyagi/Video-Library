@@ -11,6 +11,8 @@ import {
 import Loader from "../Loader/Loader";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VideoCard from "./VideoCard";
+import "./Playlists.css"
+import MetaData from "../MetaData";
 
 const Playlists = () => {
   const { loading, playlists, error, message } = useSelector(
@@ -46,6 +48,7 @@ const Playlists = () => {
 
   return (
     <Fragment>
+      <MetaData title="Playlists" />
       {loading ? (
         <Loader />
       ) : (
@@ -54,10 +57,16 @@ const Playlists = () => {
           <div className="lists__container">
             {playlists?.map((list) => (
               <div key={list._id} className="list__container">
-                <p>{list.name}</p>
-                <button className="dlt-btn-2" onClick={() => removePlaylistHandler(list.name)}>
-                  <DeleteIcon /> DELETE
-                </button>
+                <div className="list__class">
+                  <p>{list.name}</p>
+                  <button
+                    className="dlt-btn-2"
+                    onClick={() => removePlaylistHandler(list.name)}
+                  >
+                    <DeleteIcon /> DELETE
+                  </button>
+                </div>
+
                 <div className="videos__container">
                   {list?.videos?.map((video) => (
                     <div key={video._id} className="video__container">

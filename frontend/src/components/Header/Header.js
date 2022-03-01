@@ -13,7 +13,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { searchVideos } from "../../actions/videoAction";
 import Backdrop from "@mui/material/Backdrop";
 import ReactPlayer from "react-player";
-import "./Header.css"
+import "./Header.css";
+
 
 const Header = ({ isAuthenticated, user }) => {
   const [search, setSearch] = useState("");
@@ -115,7 +116,7 @@ const Header = ({ isAuthenticated, user }) => {
             <img src={user?.avatar.url} alt="user_profile_pic" />
           </Link>
         ) : (
-          <Link to="/signin">Sign In</Link>
+          <Link className="sign__link" to="/signin">Sign In</Link>
         )}
       </div>
 
@@ -123,25 +124,28 @@ const Header = ({ isAuthenticated, user }) => {
         sx={{
           color: "#fff",
           zIndex: (theme) => theme.zIndex.drawer + 1,
+          backgroundColor: "rgba(0, 0, 0, 0.900)",
         }}
         open={backdrop}
         onClick={closeHandler}
       >
-        {loading ? (
-          <h1 className="loading__msg">Loading...</h1>
-        ) : (
-          searchResults?.map((item) => (
-            <Link to={`/video/${String(item._id)}`} key={item._id}>
-              <ReactPlayer
-                url={item.video.url}
-                controls={false}
-                height="70px"
-                width="100px"
-              />
-              <p>{item.title}</p>
-            </Link>
-          ))
-        )}
+        <div className="search__results">
+          {loading ? (
+            <h1 className="loading__msg">Loading...</h1>
+          ) : (
+            searchResults?.map((item) => (
+              <Link to={`/video/${String(item._id)}`} key={item._id}>
+                <ReactPlayer
+                  url={item.video.url}
+                  controls={false}
+                  height="100%"
+                  width="100%"
+                />
+                <p>{item.title}</p>
+              </Link>
+            ))
+          )}
+        </div>
       </Backdrop>
     </div>
   );

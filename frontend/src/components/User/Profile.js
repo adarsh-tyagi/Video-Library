@@ -12,6 +12,9 @@ import {
 import { DELETE_USER_RESET } from "../../constants/userConstant";
 import Loader from "../Loader/Loader";
 import UploadIcon from "@mui/icons-material/Upload";
+import VideoLibraryIcon from "@mui/icons-material/VideoLibrary";
+import "./Profile.css"
+import MetaData from "../MetaData"
 
 const Profile = () => {
   const { loading, isAuthenticated, user, error } = useSelector(
@@ -52,6 +55,7 @@ const Profile = () => {
 
   return (
     <Fragment>
+      <MetaData title="Profile" />
       {loading ? (
         <Loader />
       ) : (
@@ -66,8 +70,8 @@ const Profile = () => {
             <p>{user?.name}</p>
             <p>{user?.email}</p>
             <p>{"Joined on " + user?.created_at?.substring(0, 10)}</p>
-            <Link to="/user/videos">My videos</Link>
-            <button onClick={logoutHandler}>Logout</button>
+            <Link to="/user/videos"><VideoLibraryIcon /> My videos</Link>
+            <button className="logout" onClick={logoutHandler}>Logout</button>
             <button className="delete" onClick={deleteHandler}>
               Delete Account
             </button>

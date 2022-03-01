@@ -11,6 +11,8 @@ import { getVideoList } from "../../actions/videoAction";
 import Loader from "../Loader/Loader";
 import VideoCard from "./VideoCard";
 import DeleteIcon from "@mui/icons-material/Delete";
+import "./History.css"
+import MetaData from "../MetaData"
 
 const History = () => {
   const { loading, history, error, message } = useSelector(
@@ -47,6 +49,7 @@ const History = () => {
 
   return (
     <Fragment>
+      <MetaData title="History" />
       {loading || videoLoading ? (
         <Loader />
       ) : (

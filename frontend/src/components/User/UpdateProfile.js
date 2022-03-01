@@ -11,6 +11,8 @@ import Loader from "../Loader/Loader";
 import PersonIcon from "@mui/icons-material/Person";
 import { useAlert } from "react-alert";
 import { UPDATE_USER_RESET } from "../../constants/userConstant";
+import "./UpdateProfile.css";
+import MetaData from "../MetaData"
 
 const UpdateProfile = () => {
   const { loading, isAuthenticated, user } = useSelector((state) => state.user);
@@ -68,10 +70,12 @@ const UpdateProfile = () => {
 
   return (
     <Fragment>
+      <MetaData title="Update Profile" />
       {loading ? (
         <Loader />
       ) : (
         <div className="update__container">
+          <h1>Update Profile</h1>
           <p>{user?.email}</p>
           <form encType="multipart/form-data" onSubmit={updateHandler}>
             <div>
@@ -94,7 +98,7 @@ const UpdateProfile = () => {
                 onChange={updateDataChange}
               />
             </div>
-            <input type="submit" value="Update" className="btn" />
+            <input className="dlt-btn" type="submit" value="Update" />
           </form>
         </div>
       )}

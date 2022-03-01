@@ -11,6 +11,7 @@ import { getVideoList } from "../../actions/videoAction";
 import Loader from "../Loader/Loader";
 import VideoCard from "./VideoCard";
 import DeleteIcon from "@mui/icons-material/Delete";
+import MetaData from "../MetaData";
 
 const WatchLater = () => {
   const { loading, error, message, watchlater } = useSelector(
@@ -46,6 +47,7 @@ const WatchLater = () => {
 
   return (
     <Fragment>
+      <MetaData title="WatchLater" />
       {loading || videoLoading ? (
         <Loader />
       ) : (
