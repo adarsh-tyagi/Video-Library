@@ -14,6 +14,7 @@ import {
   videosReducer,
 } from "./reducers/videoReducer";
 
+// combining all reducers
 const reducer = combineReducers({
   user: userReducer,
   profile: profileReducer,
@@ -29,6 +30,7 @@ const initialState = {};
 
 const middleware = [thunk];
 
+// creating store
 const store = createStore(
   reducer,
   initialState,

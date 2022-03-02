@@ -5,6 +5,7 @@ const filUpload = require("express-fileupload");
 const errorMiddleware = require("./middlewares/error");
 const userRouter = require("./routes/userRoutes");
 const videoRouter = require("./routes/videoRoutes");
+const path = require("path")
 
 // config in development mode
 if (process.env.NODE_ENV !== "PRODUCTION") {
@@ -21,6 +22,11 @@ app.use(cors());
 // routes
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/video", videoRouter);
+
+app.use(express.static(path.join(__dirname, "../frontend/build")))
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../frontend/build/index.html"))
+})
 
 // error handling
 app.use(errorMiddleware);

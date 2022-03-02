@@ -63,6 +63,7 @@ import {
   LIKED_VIDEOS_FAIL,
 } from "../constants/userConstant";
 import axios from "axios";
+import { BACKEND_URL } from "../url"
 
 // register user action
 export const register = (userdata) => async (dispatch) => {
@@ -70,7 +71,7 @@ export const register = (userdata) => async (dispatch) => {
     dispatch({ type: REGISTER_USER_REQUEST });
     const config = { headers: { "Content-Type": "multipart/form-data" } };
     const { data } = await axios.post(
-      "http://localhost:5000/api/v1/user/register",
+      `${BACKEND_URL}/user/register`,
       userdata,
       config
     );
@@ -87,7 +88,7 @@ export const login = (email, password) => async (dispatch) => {
     dispatch({ type: LOGIN_USER_REQUEST });
     const config = { "Content-Type": "application/json" };
     const { data } = await axios.post(
-      "http://localhost:5000/api/v1/user/login",
+      `${BACKEND_URL}/user/login`,
       { email, password },
       config
     );
@@ -109,7 +110,7 @@ export const logout = () => async (dispatch) => {
       },
     };
     const { data } = await axios.get(
-      "http://localhost:5000/api/v1/user/logout",
+      `${BACKEND_URL}/user/logout`,
       config
     );
     localStorage.removeItem("videolibrarytoken");
@@ -130,7 +131,7 @@ export const loadUser = () => async (dispatch) => {
       },
     };
     const { data } = await axios.get(
-      "http://localhost:5000/api/v1/user/me",
+      `${BACKEND_URL}/user/me`,
       config
     );
     dispatch({ type: LOAD_USER_SUCCESS, payload: data });
@@ -150,7 +151,7 @@ export const deleteUser = () => async (dispatch) => {
       },
     };
     const { data } = await axios.delete(
-      "http://localhost:5000/api/v1/user/me",
+      `${BACKEND_URL}/user/me`,
       config
     );
     localStorage.removeItem("videolibrarytoken");
@@ -172,7 +173,7 @@ export const updateUser = (userdata) => async (dispatch) => {
       },
     };
     const { data } = await axios.put(
-      "http://localhost:5000/api/v1/user/me",
+      `${BACKEND_URL}/user/me`,
       userdata,
       config
     );
@@ -188,7 +189,7 @@ export const forgotPassword = (email) => async (dispatch) => {
     dispatch({ type: FORGOT_PASSWORD_REQUEST });
     const config = { headers: { "Content-Type": "application/json" } };
     const { data } = await axios.post(
-      "http://localhost:5000/api/v1/user/forgot/password",
+      `${BACKEND_URL}/user/forgot/password`,
       { email },
       config
     );
@@ -204,7 +205,7 @@ export const resetPassword = (token, passwords) => async (dispatch) => {
     dispatch({ type: RESET_PASSWORD_REQUEST });
     const config = { headers: { "Content-Type": "application/json" } };
     const { data } = await axios.put(
-      `http://localhost:5000/api/v1/user/reset/password/${token}`,
+      `${BACKEND_URL}/user/reset/password/${token}`,
       passwords,
       config
     );
@@ -225,7 +226,7 @@ export const getWatchlater = () => async (dispatch) => {
       },
     };
     const { data } = await axios.get(
-      `http://localhost:5000/api/v1/user/watchlater`,
+      `${BACKEND_URL}/user/watchlater`,
       config
     );
     dispatch({ type: WATCHLATER_SUCCESS, payload: data });
@@ -245,7 +246,7 @@ export const addWatchlater = (videoId) => async (dispatch) => {
       },
     };
     const { data } = await axios.post(
-      `http://localhost:5000/api/v1/user/watchlater/add`,
+      `${BACKEND_URL}/user/watchlater/add`,
       { videoId },
       config
     );
@@ -266,7 +267,7 @@ export const removeWatchlater = (videoId) => async (dispatch) => {
       },
     };
     const { data } = await axios.post(
-      `http://localhost:5000/api/v1/user/watchlater/remove`,
+      `${BACKEND_URL}/user/watchlater/remove`,
       { videoId },
       config
     );
@@ -287,7 +288,7 @@ export const getHistory = () => async (dispatch) => {
       },
     };
     const { data } = await axios.get(
-      `http://localhost:5000/api/v1/user/history`,
+      `${BACKEND_URL}/user/history`,
       config
     );
     dispatch({ type: HISTORY_SUCCESS, payload: data });
@@ -307,7 +308,7 @@ export const addHistory = (videoId) => async (dispatch) => {
       },
     };
     const { data } = await axios.post(
-      `http://localhost:5000/api/v1/user/history/add`,
+      `${BACKEND_URL}/user/history/add`,
       { videoId },
       config
     );
@@ -328,7 +329,7 @@ export const removeHistory = (videoId) => async (dispatch) => {
       },
     };
     const { data } = await axios.post(
-      `http://localhost:5000/api/v1/user/history/remove`,
+      `${BACKEND_URL}/user/history/remove`,
       { videoId },
       config
     );
@@ -349,7 +350,7 @@ export const getPlaylist = () => async (dispatch) => {
       },
     };
     const { data } = await axios.get(
-      `http://localhost:5000/api/v1/user/playlists`,
+      `${BACKEND_URL}/user/playlists`,
       config
     );
     dispatch({ type: PLAYLIST_SUCCESS, payload: data });
@@ -369,7 +370,7 @@ export const addPlaylist = (name) => async (dispatch) => {
       },
     };
     const { data } = await axios.post(
-      `http://localhost:5000/api/v1/user/playlists/create`,
+      `${BACKEND_URL}/user/playlists/create`,
       { name },
       config
     );
@@ -390,7 +391,7 @@ export const removePlaylist = (name) => async (dispatch) => {
       },
     };
     const { data } = await axios.post(
-      `http://localhost:5000/api/v1/user/playlists/remove`,
+      `${BACKEND_URL}/user/playlists/remove`,
       { name },
       config
     );
@@ -411,7 +412,7 @@ export const addPlaylistVideo = (userdata) => async (dispatch) => {
       },
     };
     const { data } = await axios.post(
-      `http://localhost:5000/api/v1/user/playlists/add/video`,
+      `${BACKEND_URL}/user/playlists/add/video`,
       userdata,
       config
     );
@@ -432,7 +433,7 @@ export const removePlaylistVideo = (userdata) => async (dispatch) => {
       },
     };
     const { data } = await axios.post(
-      `http://localhost:5000/api/v1/user/playlists/remove/video`,
+      `${BACKEND_URL}/user/playlists/remove/video`,
       userdata,
       config
     );
@@ -456,7 +457,7 @@ export const getLikedVideos = () => async (dispatch) => {
       },
     };
     const { data } = await axios.get(
-      `http://localhost:5000/api/v1/user/liked`,
+      `${BACKEND_URL}/user/liked`,
       config
     );
     dispatch({ type: LIKED_VIDEOS_SUCCESS, payload: data });

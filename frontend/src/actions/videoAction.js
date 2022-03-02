@@ -30,6 +30,7 @@ import {
   CLEAR_MESSAGE,
 } from "../constants/videoConstant";
 import axios from "axios";
+import { BACKEND_URL } from "../url";
 
 // get home video action
 export const getHomeVideos = () => async (dispatch) => {
@@ -42,7 +43,7 @@ export const getHomeVideos = () => async (dispatch) => {
       },
     };
     const { data } = await axios.get(
-      `http://localhost:5000/api/v1/video`,
+      `${BACKEND_URL}/video`,
       config
     );
     dispatch({ type: HOME_VIDEOS_SUCCESS, payload: data });
@@ -62,7 +63,7 @@ export const searchVideos = (search) => async (dispatch) => {
       },
     };
     const { data } = await axios.get(
-      `http://localhost:5000/api/v1/video/search?search=${search}`,
+      `${BACKEND_URL}/video/search?search=${search}`,
       config
     );
     dispatch({ type: SEARCH_VIDEOS_SUCCESS, payload: data });
@@ -82,7 +83,7 @@ export const getUserVideos = () => async (dispatch) => {
       },
     };
     const { data } = await axios.get(
-      `http://localhost:5000/api/v1/video/user/videos`,
+      `${BACKEND_URL}/video/user/videos`,
       config
     );
     dispatch({ type: USER_VIDEOS_SUCCESS, payload: data });
@@ -102,7 +103,7 @@ export const getVideoList = (videos_list) => async (dispatch) => {
       },
     };
     const { data } = await axios.post(
-      `http://localhost:5000/api/v1/video/list`,
+      `${BACKEND_URL}/video/list`,
       { videos_list },
       config
     );
@@ -123,7 +124,7 @@ export const createVideo = (videodata) => async (dispatch) => {
       },
     };
     const { data } = await axios.post(
-      `http://localhost:5000/api/v1/video/create`,
+      `${BACKEND_URL}/video/create`,
       videodata,
       config
     );
@@ -144,7 +145,7 @@ export const deleteVideo = (videoId) => async (dispatch) => {
       },
     };
     const { data } = await axios.post(
-      `http://localhost:5000/api/v1/video/delete`,
+      `${BACKEND_URL}/video/delete`,
       { videoId },
       config
     );
@@ -166,7 +167,7 @@ export const toggleLike = (videoId) => async (dispatch) => {
       },
     };
     const { data } = await axios.post(
-      `http://localhost:5000/api/v1/video/like`,
+      `${BACKEND_URL}/video/like`,
       { videoId },
       config
     );
@@ -187,7 +188,7 @@ export const toggleDislike = (videoId) => async (dispatch) => {
       },
     };
     const { data } = await axios.post(
-      `http://localhost:5000/api/v1/video/dislike`,
+      `${BACKEND_URL}/video/dislike`,
       { videoId },
       config
     );
@@ -208,7 +209,7 @@ export const getVideoDetails = (videoId) => async (dispatch) => {
       },
     };
     const { data } = await axios.get(
-      `http://localhost:5000/api/v1/video/details/${videoId}`,
+      `${BACKEND_URL}/video/details/${videoId}`,
       config
     );
     dispatch({ type: VIDEO_DEATILS_SUCCESS, payload: data });
