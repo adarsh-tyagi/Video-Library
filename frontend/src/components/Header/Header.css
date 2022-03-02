@@ -135,6 +135,7 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    justify-content: center;
     padding: 2rem 1rem;
 }
 .search__results > a{
@@ -163,4 +164,21 @@
 }
 .sign__link:hover{
     color: red;
+}
+
+@media (max-width: 600px){
+    .search__results > a{
+        max-width: 200px;
+        height: 150px;
+    }
+}
+
+@media (max-width: 463px){
+    .search__results > a{
+        max-width: 170px;
+        height: 120px;
+    }
+    .search__results > a > p{
+        font-size: 0.9rem;
+    }
 }

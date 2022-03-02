@@ -11,7 +11,7 @@ const ProtectRoute = ({ component: Component, ...rest }) => {
     }
     return <Component />; 
   }
-  return null;
+  return <Navigate to="/" />;
 };
 
 export default ProtectRoute;

@@ -63,7 +63,7 @@ const Profile = () => {
           <div className="container__one">
             <h1>Profile</h1>
             <img src={user?.avatar?.url} alt={user?.name} />
-            <a href="/profile/update">Edit Profile</a>
+            <Link to="/profile/update">Edit Profile</Link>
           </div>
           <div className="container__two">
             <Link to="/video/upload"><UploadIcon /> Upload your video</Link>

@@ -40,6 +40,7 @@ const Header = ({ isAuthenticated, user }) => {
   };
 
   useEffect(() => {
+    toggleScreen()
     window.addEventListener("resize", toggleScreen);
     return () => window.removeEventListener("resize", toggleScreen);
   }, []);
@@ -136,6 +137,7 @@ const Header = ({ isAuthenticated, user }) => {
             searchResults?.map((item) => (
               <Link to={`/video/${String(item._id)}`} key={item._id}>
                 <ReactPlayer
+                  style={{border: "1px solid #404040"}}
                   url={item.video.url}
                   controls={false}
                   height="100%"
