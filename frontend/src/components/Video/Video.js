@@ -113,7 +113,7 @@ const Video = () => {
   };
 
   const addHistoryFn = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     dispatch(addHistory(String(video._id)));
   };
 
