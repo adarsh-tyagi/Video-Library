@@ -91,24 +91,29 @@ const Video = () => {
     }
   };
 
-  const toggleLikeFn = () => {
+  const toggleLikeFn = (e) => {
+    e.preventDefault()
     dispatch(toggleLike(String(video._id)));
   };
-  const toggleDislikeFn = () => {
+  const toggleDislikeFn = (e) => {
+    e.preventDefault();
     dispatch(toggleDislike(String(video._id)));
   };
-  const addToWatchlaterFn = () => {
+  const addToWatchlaterFn = (e) => {
+    e.preventDefault();
     dispatch(addWatchlater(String(video._id)));
   };
 
   const addToPlaylistFn = () => {
     setShowModal(true);
   };
-  const createPlaylist = () => {
+  const createPlaylist = (e) => {
+    e.preventDefault();
     dispatch(addPlaylist(playlistName));
   };
 
-  const addHistoryFn = () => {
+  const addHistoryFn = (e) => {
+    e.preventDefault()
     dispatch(addHistory(String(video._id)));
   };
 
