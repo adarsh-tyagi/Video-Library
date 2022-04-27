@@ -92,7 +92,8 @@ const Video = () => {
   };
 
   const toggleLikeFn = (e) => {
-    e.preventDefault()
+    e.preventDefault();
+    console.log("liked");
     dispatch(toggleLike(String(video._id)));
   };
   const toggleDislikeFn = (e) => {
@@ -113,7 +114,7 @@ const Video = () => {
   };
 
   const addHistoryFn = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     dispatch(addHistory(String(video._id)));
   };
 
