@@ -47,8 +47,6 @@ const History = () => {
     }
   }, [dispatch, alert, error, message]);
 
-  console.log(history);
-
   return (
     <Fragment>
       <MetaData title="History" />
