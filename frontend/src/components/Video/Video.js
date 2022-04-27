@@ -154,8 +154,8 @@ const Video = () => {
   }, [
     dispatch,
     alert,
-    // error,
-    // message,
+    error,
+    message,
     playlistError,
     userError,
     playlistMessage,
