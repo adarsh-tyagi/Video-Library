@@ -93,7 +93,6 @@ const Video = () => {
 
   const toggleLikeFn = (e) => {
     e.preventDefault();
-    console.log("liked");
     dispatch(toggleLike(String(video._id)));
   };
   const toggleDislikeFn = (e) => {
@@ -155,8 +154,8 @@ const Video = () => {
   }, [
     dispatch,
     alert,
-    error,
-    message,
+    // error,
+    // message,
     playlistError,
     userError,
     playlistMessage,
